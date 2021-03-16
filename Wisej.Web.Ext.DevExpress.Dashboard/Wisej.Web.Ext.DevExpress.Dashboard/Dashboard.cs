@@ -746,6 +746,23 @@ namespace Wisej.Web.Ext.DevExpress.Dashboard
 		}
 		private MobileLayoutMode _mobileLayoutEnabled = MobileLayoutMode.Auto;
 
+		public WorkingMode WorkingMode
+		{
+			get
+			{
+				return this._workingMode;
+			}
+			set
+			{
+				if (this._workingMode != value)
+				{
+					this._workingMode = value;
+					Update();
+				}
+			}
+		}
+		private WorkingMode _workingMode = WorkingMode.Designer;
+
 		#endregion
 
 		#region Methods
@@ -770,7 +787,10 @@ namespace Wisej.Web.Ext.DevExpress.Dashboard
 		/// <param name="xml">A System.String value that specifies a dashboard XML definition.</param>
 		public void OpenDashboard(string xml)
 		{
-			this.WrappedControl.OpenDashboard(xml);
+			if (this.WrappedControl != null)
+			{
+				this.WrappedControl.OpenDashboard(xml);
+			}
 		}
 
 		/// <summary>
@@ -781,7 +801,10 @@ namespace Wisej.Web.Ext.DevExpress.Dashboard
 		/// containing a dashboard xml definition.</param>
 		public void OpenDashboard(XDocument document)
 		{
-			this.WrappedControl.OpenDashboard(document);
+			if (this.WrappedControl != null)
+			{
+				this.WrappedControl.OpenDashboard(document);
+			}
 		}
 
 		/// <summary>
@@ -841,6 +864,7 @@ namespace Wisej.Web.Ext.DevExpress.Dashboard
 			dashboard.AllowExportDashboardItems = this.AllowExportDashboardItems;
 			dashboard.AllowInspectAggregatedData = this.AllowInspectAggregatedData;
 			dashboard.AllowCreateNewJsonConnection = this.AllowCreateNewJsonConnection;
+			dashboard.WorkingMode = this.WorkingMode;
 
 			// register events.
 			AssignClientSideEvents(dashboard);
